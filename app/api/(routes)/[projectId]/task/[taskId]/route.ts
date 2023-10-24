@@ -50,3 +50,14 @@ export async function DELETE(
     return new NextResponse("error", { status: 500 });
   }
 }
+export async function GET(
+  req: Request,
+  { params }: { params: { projectId: string; taskId: string } }
+) {
+  const task = await prismadb.tasks.findMany({
+    where: {
+      id: params.taskId,
+    },
+  });
+  return NextResponse.json(task);
+}
